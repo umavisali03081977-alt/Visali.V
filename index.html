@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Python Learner | CSE Student</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: white;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           CUSTOM CURSOR
+        ========================= */
+
+        .cursor {
+            width: 10px;
+            height: 10px;
+            background: #ff1493;
+            border-radius: 50%;
+
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+
+            transform: translate(-50%, -50%);
+
+            box-shadow:
+                0 0 10px #ff1493,
+                0 0 25px #ff1493;
+        }
+
+        .cursor-follower {
+            width: 35px;
+            height: 35px;
+
+            border: 1px solid #ff1493;
+            border-radius: 50%;
+
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+
+            transform: translate(-50%, -50%);
+
+            transition:
+                width 0.2s,
+                height 0.2s,
+                background 0.2s;
+        }
+
+
+        /* =========================
+           BACKGROUND GLOW
+        ========================= */
+
+        .bg-glow {
+            position: fixed;
+
+            width: 450px;
+            height: 450px;
+
+            border-radius: 50%;
+
+            filter: blur(130px);
+
+            opacity: 0.12;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        .glow-one {
+            background: #ff1493;
+
+            top: -150px;
+            left: -150px;
+        }
+
+        .glow-two {
+            background: #ff00aa;
+
+            right: -150px;
+            bottom: -150px;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        header {
+            position: fixed;
+
+            width: 100%;
+            top: 0;
+
+            z-index: 1000;
+
+            backdrop-filter: blur(15px);
+
+            background: rgba(5, 5, 5, 0.75);
+
+            border-bottom:
+                1px solid rgba(255, 20, 147, 0.1);
+        }
+
+        .navbar {
+            max-width: 1150px;
+
+            margin: auto;
+
+            height: 75px;
+
+            padding: 0 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: "Space Grotesk", sans-serif;
+
+            font-size: 24px;
+
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #ff1493;
+        }
+
+        .nav-links {
+            display: flex;
+
+            gap: 35px;
+
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #aaa;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff1493;
+        }
+
+        .menu-btn {
+            display: none;
+
+            background: none;
+
+            border: none;
+
+            color: white;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding: 150px 25px 80px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 50px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+
+            animation: fadeUp 1s ease;
+        }
+
+        .small-text {
+            color: #ff1493;
+
+            letter-spacing: 5px;
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-family: "Space Grotesk", sans-serif;
+
+            font-size: clamp(55px, 8vw, 95px);
+
+            line-height: 0.95;
+
+            margin-bottom: 20px;
+        }
+
+        .pink {
+            color: #ff1493;
+        }
+
+        .hero h2 {
+            font-size: 25px;
+
+            color: #ddd;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h2 span {
+            color: #ff1493;
+        }
+
+        .hero-description {
+            color: #888;
+
+            line-height: 1.8;
+
+            max-width: 550px;
+        }
+
+
+        /* BUTTONS */
+
+        .hero-buttons {
+            display: flex;
+
+            gap: 15px;
+
+            margin-top: 35px;
+        }
+
+        .btn {
+            padding: 13px 25px;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .primary-btn {
+            background: #ff1493;
+
+            color: white;
+
+            box-shadow:
+                0 0 25px rgba(255, 20, 147, 0.25);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 0 35px rgba(255, 20, 147, 0.5);
+        }
+
+        .secondary-btn {
+            color: white;
+
+            border: 1px solid #333;
+        }
+
+        .secondary-btn:hover {
+            border-color: #ff1493;
+
+            color: #ff1493;
+        }
+
+
+        /* =========================
+           CODE CARD
+        ========================= */
+
+        .code-card {
+            width: 440px;
+
+            background: #0b0b0b;
+
+            border: 1px solid #222;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 0 50px rgba(255, 20, 147, 0.08);
+
+            overflow: hidden;
+
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .code-top {
+            height: 40px;
+
+            padding: 12px;
+
+            background: #111;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .dot {
+            display: inline-block;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            margin-right: 6px;
+        }
+
+        .red {
+            background: #ff5f56;
+        }
+
+        .yellow {
+            background: #ffbd2e;
+        }
+
+        .green {
+            background: #27c93f;
+        }
+
+        .code-card pre {
+            padding: 25px;
+
+            font-family: monospace;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+            color: #ddd;
+        }
+
+        .purple {
+            color: #c084fc;
+        }
+
+        .code-card .pink {
+            color: #ff1493;
+        }
+
+        .code-card .green {
+            color: #7ee787;
+        }
+
+        .orange {
+            color: #ff9d00;
+        }
+
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .section {
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding: 120px 25px;
+        }
+
+        .section-tag {
+            color: #ff1493;
+
+            font-family: monospace;
+
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: "Space Grotesk", sans-serif;
+
+            font-size: clamp(35px, 5vw, 55px);
+
+            margin-bottom: 60px;
+        }
+
+        .section-title span {
+            color: #ff1493;
+        }
+
+
+        /* =========================
+           ABOUT
+        ========================= */
+
+        .about-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .about-card {
+            background: #0b0b0b;
+
+            border: 1px solid #222;
+
+            padding: 30px;
+
+            min-height: 230px;
+
+            transition: 0.4s;
+        }
+
+        .about-card:hover {
+            border-color: #ff1493;
+
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 15px 40px rgba(255, 20, 147, 0.08);
+        }
+
+        .number {
+            color: #ff1493;
+
+            font-family: monospace;
+
+            margin-bottom: 30px;
+        }
+
+        .about-card h3 {
+            margin-bottom: 15px;
+
+            font-size: 20px;
+        }
+
+        .about-card p {
+            color: #777;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skills-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+        }
+
+        .skill {
+            background: #0b0b0b;
+
+            border: 1px solid #222;
+
+            padding: 30px;
+
+            transition: 0.3s;
+        }
+
+        .skill:hover {
+            border-color: #ff1493;
+
+            transform: translateY(-5px);
+        }
+
+        .skill-icon {
+            font-size: 35px;
+
+            margin-bottom: 20px;
+        }
+
+        .skill h3 {
+            margin-bottom: 15px;
+        }
+
+        .progress {
+            width: 100%;
+
+            height: 5px;
+
+            background: #222;
+
+            margin-bottom: 8px;
+        }
+
+        .progress span {
+            display: block;
+
+            height: 100%;
+
+            background: #ff1493;
+
+            box-shadow:
+                0 0 10px #ff1493;
+        }
+
+        .skill small {
+            color: #777;
+        }
+
+
+        /* =========================
+           PROJECTS
+        ========================= */
+
+        .projects-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #0b0b0b;
+
+            border: 1px solid #222;
+
+            padding: 30px;
+
+            position: relative;
+
+            transition: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+
+            border-color: #ff1493;
+        }
+
+        .project-number {
+            position: absolute;
+
+            right: 20px;
+
+            top: 20px;
+
+            color: #333;
+
+            font-family: monospace;
+
+            font-size: 25px;
+        }
+
+        .project-card h3 {
+            margin: 35px 0 15px;
+
+            font-size: 22px;
+        }
+
+        .project-card p {
+            color: #777;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+        .tech {
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+        }
+
+        .tech span {
+            color: #ff1493;
+
+            background:
+                rgba(255, 20, 147, 0.08);
+
+            padding: 5px 10px;
+
+            font-size: 11px;
+        }
+
+        .project-link {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .project-link:hover {
+            color: #ff1493;
+        }
+
+
+        /* =========================
+           CONTACT
+        ========================= */
+
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-section .section-title {
+            margin-bottom: 20px;
+        }
+
+        .contact-text {
+            color: #777;
+
+            margin-bottom: 35px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #1c1c1c;
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #555;
+
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #ff1493;
+        }
+
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-15px);
+            }
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+            .hero-description {
+                margin: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .code-card {
+                width: 100%;
+
+                max-width: 500px;
+            }
+
+            .about-container,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .nav-links {
+                position: absolute;
+
+                top: 75px;
+
+                left: 0;
+
+                width: 100%;
+
+                background: #080808;
+
+                flex-direction: column;
+
+                align-items: center;
+
+                padding: 25px;
+
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding-top: 130px;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .code-card pre {
+                font-size: 11px;
+            }
+        }
+
+
+        /* Mobile devices don't have custom cursor */
+
+        @media (hover: none) {
+
+            .cursor,
+            .cursor-follower {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- CUSTOM CURSOR -->
+
+    <div class="cursor"></div>
+
+    <div class="cursor-follower"></div>
+
+
+    <!-- BACKGROUND GLOW -->
+
+    <div class="bg-glow glow-one"></div>
+
+    <div class="bg-glow glow-two"></div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                <span>&lt;</span>Python<span>/&gt;</span>
+            </div>
+
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+
+                <li>
+                    <a href="#about">About</a>
+                </li>
+
+                <li>
+                    <a href="#skills">Skills</a>
+                </li>
+
+                <li>
+                    <a href="#projects">Projects</a>
+                </li>
+
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+
+            </ul>
+
+
+            <button
+                class="menu-btn"
+                id="menuBtn">
+
+                ☰
+
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section
+        id="home"
+        class="hero">
+
+
+        <div class="hero-content">
+
+            <p class="small-text">
+                HELLO, I'M
+            </p>
+
+
+            <h1>
+
+                <span class="pink">
+                    Python
+                </span>
+
+                Learner
+
+            </h1>
+
+
+            <h2>
+
+                CSE
+                <span>
+                    Third Year Student
+                </span>
+
+            </h2>
+
+
+            <p class="hero-description">
+
+                Passionate Computer Science student
+                learning Python, web development and
+                building creative digital projects.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#projects"
+                    class="btn primary-btn">
+
+                    View Projects
+
+                </a>
+
+
+                <a
+                    href="#contact"
+                    class="btn secondary-btn">
+
+                    Contact Me
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CODE CARD -->
+
+        <div class="code-card">
+
+            <div class="code-top">
+
+                <span class="dot red"></span>
+
+                <span class="dot yellow"></span>
+
+                <span class="dot green"></span>
+
+            </div>
+
+
+            <pre><code>
+
+<span class="purple">class</span>
+<span class="pink">Student</span>:
+    name = <span class="orange">"Visali.V"</span>
+
+    department =<span class="orange">"CSE"</span>
+
+    year =<span class="orange">3</span>
+
+    <span class="purple">def</span>
+    <span class="pink">learn</span>(self):
+
+        skills = [
+
+            <span class="orange">"Python"</span>,
+
+            <span class="orange">"HTML"</span>,
+
+            <span class="orange">"CSS"</span>,
+
+            <span class="orange">"JavaScript"</span>
+
+        ]
+
+        <span class="purple">return</span>
+        skills
+
+            </code></pre>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section
+        id="about"
+        class="section">
+
+        <p class="section-tag">
+            // ABOUT ME
+        </p>
+
+
+        <h2 class="section-title">
+
+            Learning.
+            Building.
+            <span>Growing.</span>
+
+        </h2>
+
+
+        <div class="about-container">
+
+
+            <div class="about-card">
+
+                <div class="number">
+                    01
+                </div>
+
+                <h3>
+                    Who Am I?
+                </h3>
+
+                <p>
+
+                    I'm a third-year Computer
+                    Science Engineering student
+                    interested in programming,
+                    web development and
+                    problem solving.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="about-card">
+
+                <div class="number">
+                    02
+                </div>
+
+                <h3>
+                    Currently Learning
+                </h3>
+
+                <p>
+
+                    Currently focusing on Python
+                    programming, data structures,
+                    JavaScript and developing
+                    real-world projects.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="about-card">
+
+                <div class="number">
+                    03
+                </div>
+
+                <h3>
+                    My Goal
+                </h3>
+
+                <p>
+
+                    To become a skilled software
+                    developer by continuously
+                    learning new technologies
+                    and building useful projects.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         SKILLS
+    ========================== -->
+
+    <section
+        id="skills"
+        class="section">
+
+        <p class="section-tag">
+            // MY SKILLS
+        </p>
+
+
+        <h2 class="section-title">
+
+            Technologies I
+            <span>Work With</span>
+
+        </h2>
+
+
+        <div class="skills-grid">
+
+
+            <div class="skill">
+
+                <div class="skill-icon">
+                    🐍
+                </div>
+
+                <h3>
+                    Python
+                </h3>
+
+                <div class="progress">
+
+                    <span
+                        style="width:85%">
+                    </span>
+
+                </div>
+
+                <small>
+                    85%
+                </small>
+
+            </div>
+
+
+
+            <div class="skill">
+
+                <div class="skill-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    HTML
+                </h3>
+
+                <div class="progress">
+
+                    <span
+                        style="width:90%">
+                    </span>
+
+                </div>
+
+                <small>
+                    90%
+                </small>
+
+            </div>
+
+
+
+            <div class="skill">
+
+                <div class="skill-icon">
+                    🎨
+                </div>
+
+                <h3>
+                    CSS
+                </h3>
+
+                <div class="progress">
+
+                    <span
+                        style="width:80%">
+                    </span>
+
+                </div>
+
+                <small>
+                    80%
+                </small>
+
+            </div>
+
+
+
+            <div class="skill">
+
+                <div class="skill-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    JavaScript
+                </h3>
+
+                <div class="progress">
+
+                    <span
+                        style="width:70%">
+                    </span>
+
+                </div>
+
+                <small>
+                    70%
+                </small>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         PROJECTS
+    ========================== -->
+
+    <section
+        id="projects"
+        class="section">
+
+        <p class="section-tag">
+            // MY PROJECTS
+        </p>
+
+
+        <h2 class="section-title">
+
+            Things I've
+            <span>Built</span>
+
+        </h2>
+
+
+        <div class="projects-grid">
+
+
+            <div class="project-card">
+
+                <span class="project-number">
+                    01
+                </span>
+
+                <h3>
+                    Python Calculator
+                </h3>
+
+                <p>
+
+                    A simple calculator application
+                    built using Python programming
+                    concepts.
+
+                </p>
+
+                <div class="tech">
+
+                    <span>
+                        Python
+                    </span>
+
+                </div>
+
+                <a
+                    href="#"
+                    class="project-link">
+
+                    View Project →
+
+                </a>
+
+            </div>
+
+
+
+            <div class="project-card">
+
+                <span class="project-number">
+                    02
+                </span>
+
+                <h3>
+                    Student Management
+                </h3>
+
+                <p>
+
+                    A basic student management
+                    system designed using Python
+                    and database concepts.
+
+                </p>
+
+                <div class="tech">
+
+                    <span>
+                        Python
+                    </span>
+
+                    <span>
+                        SQL
+                    </span>
+
+                </div>
+
+                <a
+                    href="#"
+                    class="project-link">
+
+                    View Project →
+
+                </a>
+
+            </div>
+
+
+
+            <div class="project-card">
+
+                <span class="project-number">
+                    03
+                </span>
+
+                <h3>
+                    Portfolio Website
+                </h3>
+
+                <p>
+
+                    A modern personal portfolio
+                    website with animations
+                    and interactive UI.
+
+                </p>
+
+                <div class="tech">
+
+                    <span>
+                        HTML
+                    </span>
+
+                    <span>
+                        CSS
+                    </span>
+
+                    <span>
+                        JS
+                    </span>
+
+                </div>
+
+                <a
+                    href="#"
+                    class="project-link">
+
+                    View Project →
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section
+        id="contact"
+        class="section contact-section">
+
+        <p class="section-tag">
+            // CONTACT
+        </p>
+
+
+        <h2 class="section-title">
+
+            Let's
+            <span>Connect</span>
+
+        </h2>
+
+
+        <p class="contact-text">
+
+            Interested in my work or want to
+            collaborate? Feel free to reach out.
+
+        </p>
+
+
+        <a
+            href="mailto:yourmail@gmail.com"
+            class="btn primary-btn">
+
+            Say Hello →
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Visali.V
+            Built with
+            <span>♥</span>
+            and Python.
+
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           CUSTOM CURSOR
+        ========================== */
+
+        const cursor =
+            document.querySelector(".cursor");
+
+        const follower =
+            document.querySelector(
+                ".cursor-follower"
+            );
+
+
+        document.addEventListener(
+            "mousemove",
+            function (e) {
+
+                cursor.style.left =
+                    e.clientX + "px";
+
+                cursor.style.top =
+                    e.clientY + "px";
+
+
+                follower.animate(
+
+                    {
+                        left:
+                            e.clientX + "px",
+
+                        top:
+                            e.clientY + "px"
+                    },
+
+                    {
+                        duration: 400,
+
+                        fill: "forwards"
+                    }
+
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           CURSOR HOVER EFFECT
+        ========================== */
+
+        const hoverElements =
+            document.querySelectorAll(
+                "a, button, .project-card, .skill, .about-card"
+            );
+
+
+        hoverElements.forEach(
+            function (element) {
+
+                element.addEventListener(
+                    "mouseenter",
+                    function () {
+
+                        follower.style.width =
+                            "55px";
+
+                        follower.style.height =
+                            "55px";
+
+                        follower.style.background =
+                            "rgba(255, 20, 147, 0.08)";
+
+                    }
+                );
+
+
+                element.addEventListener(
+                    "mouseleave",
+                    function () {
+
+                        follower.style.width =
+                            "35px";
+
+                        follower.style.height =
+                            "35px";
+
+                        follower.style.background =
+                            "transparent";
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           MOBILE MENU
+        ========================== */
+
+        const menuBtn =
+            document.getElementById(
+                "menuBtn"
+            );
+
+        const navLinks =
+            document.querySelector(
+                ".nav-links"
+            );
+
+
+        menuBtn.addEventListener(
+            "click",
+            function () {
+
+                navLinks.classList.toggle(
+                    "active"
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           CLOSE MOBILE MENU
+        ========================== */
+
+        document
+            .querySelectorAll(".nav-links a")
+            .forEach(
+                function (link) {
+
+                    link.addEventListener(
+                        "click",
+                        function () {
+
+                            navLinks.classList
+                                .remove("active");
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =========================
+           SCROLL REVEAL
+        ========================== */
+
+        const cards =
+            document.querySelectorAll(
+                ".about-card, .skill, .project-card"
+            );
+
+
+        const observer =
+            new IntersectionObserver(
+
+                function (entries) {
+
+                    entries.forEach(
+                        function (entry) {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target.style
+                                    .opacity = "1";
+
+                                entry.target.style
+                                    .transform =
+                                    "translateY(0)";
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+                    threshold: 0.15
+                }
+
+            );
+
+
+        cards.forEach(
+            function (card) {
+
+                card.style.opacity = "0";
+
+                card.style.transform =
+                    "translateY(30px)";
+
+                card.style.transition =
+                    "all 0.7s ease";
+
+                observer.observe(card);
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
